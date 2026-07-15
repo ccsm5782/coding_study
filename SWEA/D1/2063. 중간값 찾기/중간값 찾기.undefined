@@ -1,0 +1,9 @@
+n = int(input())
+# 1. input().split()으로 수정
+l = list(map(int, input().split()))
+
+# 2. l.sort()로 수정 (리스트 자체를 정렬)
+l.sort()
+
+# 3. / 대신 // 를 사용하여 정수 인덱스(4)로 접근
+print(l[n // 2])
