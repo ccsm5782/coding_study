@@ -1,0 +1,33 @@
+TC = int(input())
+
+for tc in range(TC):
+    N, M = map(int, input().split())
+    arr = []
+    for j in range(N):
+        string = input()
+        temp = []
+        for k in range(N):
+            temp.append(string[k])
+        arr.append(temp)
+
+    answer = ''
+
+    # 가로 탐색
+    for i in range(N):
+        for j in range(N-M+1):
+            alpha = []
+            for k in range(M):
+                alpha.append(arr[i][j+k])
+            if alpha == alpha[::-1]:
+                answer = ''.join(alpha)
+
+    # 세로 탐색
+    for i in range(N-M+1):
+        for j in range(N):
+            alpha = []
+            for k in range(M):
+                alpha.append(arr[i+k][j])
+            if alpha == alpha[::-1]:
+                answer = ''.join(alpha)
+
+    print(f"#{tc+1} {answer}")
