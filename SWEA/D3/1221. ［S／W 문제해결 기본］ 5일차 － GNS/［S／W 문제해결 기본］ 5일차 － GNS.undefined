@@ -1,0 +1,14 @@
+TC = int(input())
+num_list = ["ZRO", "ONE", "TWO", "THR", "FOR", "FIV", "SIX", "SVN", "EGT", "NIN"]
+
+for i in range(TC):
+    a, b = input().split()
+    b = int(b)
+    arr = list(input().split())
+    temp = []
+    for j in num_list:
+        for k in range(b):
+            if j == arr[k]:
+                temp.append(arr[k])
+    print(a)
+    print(*temp)
