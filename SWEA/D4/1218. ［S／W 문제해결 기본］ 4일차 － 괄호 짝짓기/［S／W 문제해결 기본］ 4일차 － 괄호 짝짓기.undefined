@@ -1,0 +1,38 @@
+for tc in range(10):
+    N = int(input())
+    arr = list(input())
+    temp_in = [] # 여는 괄호 
+    answer = 1
+    for ho in arr:
+        if ho == '(' or ho == '[' or ho == '{' or ho == '<':
+            temp_in.append(ho) 
+        else: # 닫는 괄호가 나오면 마지막 대상과 짝이 맞는지 확인하고 pop시킨다.
+            if len(temp_in) >= 1:
+                if ho == ')':
+                    if '(' == temp_in.pop():
+                        continue
+                    else:
+                        answer = 0
+                        break
+                elif ho == ']':
+                    if '[' == temp_in.pop():
+                        continue
+                    else:
+                        answer = 0
+                        break
+                elif ho == '}':
+                    if '{' == temp_in.pop():
+                        continue
+                    else:
+                        answer = 0
+                        break
+                elif ho == '>':
+                    if '<' == temp_in.pop():
+                        continue
+                    else:
+                        answer = 0
+                        break
+            else:
+                answer = 0
+                break
+    print(f"#{tc+1} {answer}")
