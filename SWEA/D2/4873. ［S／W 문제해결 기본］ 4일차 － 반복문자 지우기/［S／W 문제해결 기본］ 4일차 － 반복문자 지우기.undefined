@@ -1,0 +1,25 @@
+def find(arr):
+    for _ in range(len(arr)-1):
+        if arr[_] == arr[_+1]:
+            return 1
+    return 0
+
+
+tc = int(input())
+
+for i in range(tc):
+
+    string = list(input())
+
+    while find(string):
+        if not find(string):
+            break
+    # pop 되면서 string의 전체 길이가 줄어드니까 string[j+1]이게 j가 len(string)에 가까워지면 인덱스 초과'
+        for j in range(0,len(string)-1):
+            if string[j] == string[j+1]: 
+                string.pop(j)
+                string.pop(j)
+                break
+            else:
+                continue
+    print(f"#{i+1} {len(string)}")
