@@ -1,0 +1,35 @@
+tc = int(input())
+ho = {
+    '}': '{',
+    ')': '('
+}
+
+for i in range(tc):
+    string = input()
+    answer = 1
+    open_ho = []
+    for word in range(len(string)): # 각각 자리 하나씩 돈다
+
+        if string[word] in '{(': # 만약 여는 괄호가 나오면
+            open_ho.append(string[word]) # open_ho라는 리스트에 추가한다.
+
+        elif string[word] in '})': # 닫는 괄호가 나오면
+            if len(open_ho) >= 1: # open_ho에 무언가가 들어있으면 
+                temp = open_ho[-1]
+                if temp != ho[string[word]]: # pop 했을 때 다르다면
+                    answer = 0 # 거짓
+                    break
+                else:
+                    open_ho.pop() # 만약 이 둘이 같다면, pop하고 다음 자리 탐색한다
+                    continue
+            else: # open_ho에 무엇도 들어있지 않다면
+                answer = 0 # 거짓 
+                break
+
+        else: # 여는 괄호 닫는 괄호 둘 다 아니라면
+            continue # 다음 칸 탐색
+    if len(open_ho) != 0:
+        answer = 0
+        
+    print(f"#{i+1} {answer}")
+            
