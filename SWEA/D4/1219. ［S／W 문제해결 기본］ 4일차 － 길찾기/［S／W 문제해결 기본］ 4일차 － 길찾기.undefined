@@ -1,0 +1,37 @@
+# 형님 풀이 참고
+
+def dfs(v):
+    # v를 방문 처리, 갈수 있는 곳은 다 1처리
+    visited[v] = 1
+ 
+    # v와 연결된(단방향으로 v -> w인) 이웃 w들을 하나씩 확인
+    for w in adj_lst[v]:
+        if visited[w] == 0:
+            dfs(w)
+ 
+ 
+for tc in range(1, 11):
+    testcase, c = map(int, input().split())  #c 는 간선의 개수
+ 
+    # (정점, 정점) 쌍이 두 개씩 나란히 펼쳐진 형태로 저장됨
+    graph = list(map(int, input().split()))
+ 
+    # 정점 번호가 0~99까지 나올 수 있으므로 100칸으로 만든다
+    # (간선 개수 c로 만들면 안 됨! 정점 개수 기준으로 만들어야 함)
+    adj_lst = [[] for _ in range(100)]
+    visited = [0] * 100
+ 
+    for i in range(c):  #간선 개수만큼 반복. 왜냐면 간선 하나당 정점 2개씩 들어있으므로
+        s, e = graph[i * 2], graph[i * 2 + 1]
+ 
+        # 방향이 있는 그래프이므로 s -> e 한쪽으로만 저장
+        adj_lst[s].append(e)
+ 
+    # 0번 정점에서 출발해서 갈 수 있는 곳을 전부 방문 표시
+    dfs(0)
+ 
+    # 99번을 방문했으면 길이 있는 것(1), 아니면 없는 것(0)
+    if visited[99] == 1:
+        print(f'#{testcase} 1')
+    else:
+        print(f'#{testcase} 0')
