@@ -1,0 +1,35 @@
+T = int(input())
+
+for testcase in range(T):
+    lst = list(input().split()) # 후위 표기식으로 입력
+    number = []
+    answer = 'error'
+
+    for i in range(len(lst)):
+        if lst[i] not in '*/+-' and lst[i] != '.': # 숫자가 나왔다면
+            number.append(int(lst[i]))
+        else: # 기호가 나왔다면
+            if lst[i] == '.':
+                break
+            if len(number) < 2: # 근데 숫자가 없었다면
+                while number:
+                    number.pop()
+                    break
+                if len(number) == 0:
+                    break
+            else: # 숫자가 2개 이상 있기는 했다면
+                a = number.pop(-1)
+                b = number.pop(-1)
+                if lst[i] == '*':
+                    number.append(b*a)
+                elif lst[i] == '/':
+                    number.append(b//a)
+                elif lst[i] == '+':
+                    number.append(b+a)
+                elif lst[i] == '-':
+                    number.append(b-a)
+                else:
+                    continue
+    if len(number) == 1:
+        answer = number[0]
+    print(f"#{testcase+1} {answer}")
