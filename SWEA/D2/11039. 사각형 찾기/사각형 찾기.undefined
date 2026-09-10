@@ -1,0 +1,30 @@
+T = int(input())
+for testcase in range(T):
+    N = int(input())
+    arr = [list(map(int, input().split())) for i in range(N)]
+    track = [[0]*N for _ in range(N)]
+    max_rec = 0
+    max_d1 = N-1
+    max_d2 = N-1
+
+    for d1 in range(N):
+        for d2 in range(N):
+            if arr[d1][d2] == 1 and track[d1][d2] == 0: # 만약 1로 찍혀있고, 이전에 방문하지 않았다면
+                d2_move_ava = 0
+                while (d2 + d2_move_ava) <= max_d2 and arr[d1][d2 + d2_move_ava] == 1:
+                    d2_move_ava += 1
+                d2_move_ava -= 1
+
+                d1_move_ava = 0
+                while (d1 + d1_move_ava) <= max_d1 and arr[d1 + d1_move_ava][d2] == 1:
+                    d1_move_ava += 1
+                d1_move_ava -= 1
+
+                for track_d1 in range(d1_move_ava+1):
+                    for track_d2 in range(d2_move_ava+1):
+                        track[d1 + track_d1][d2 + track_d2] = 1
+
+                if (d2_move_ava+1) * (d1_move_ava+1) >= max_rec:
+                    max_rec = (d2_move_ava+1) * (d1_move_ava+1)
+
+    print(f"#{testcase+1} {max_rec}")
