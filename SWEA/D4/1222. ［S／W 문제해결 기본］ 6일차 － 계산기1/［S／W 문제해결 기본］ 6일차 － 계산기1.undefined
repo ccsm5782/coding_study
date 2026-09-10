@@ -1,0 +1,29 @@
+T = 10
+for testcase in range(1,T+1):
+    n = int(input()) # 문자열의 길이
+    lst = list(input()) # 입력 문자열을 하나씩 리스트로 만들기
+    symbol = [] # 연산자(+)를 임시로 담아둘 스택
+    postfix = [] # 후위 표기식으로 변환된 결과를 담을 리스트
+
+    # 1. 중위 표기식 -> 후위 표기식 변환
+    for i in range(n):
+        if lst[i] != '+': # 숫자라면,
+            postfix.append(lst[i]) # 숫자는 바로 후위 표기식에 넣음
+        else:
+            symbol.append(lst[i]) # + 기호라면, symbol 스택에 넣음
+
+    # symbol 스택에 남아있는 '+'를 모두 꺼내 후위 표기식 뒤에 붙임
+    while symbol:
+        postfix.append(symbol.pop())
+
+    # 후위 표기식 계산
+    numbers = [] # 숫자 계산시 사용할 스택
+    for char in postfix:
+        if char != '+':
+            numbers.append(int(char)) # 숫자는 정수로 바꿔 스택에 넣음
+        else: # '+'를 만나면
+            num2 = numbers.pop()
+            num1 = numbers.pop()
+            numbers.append(num1 + num2)
+
+    print(f"#{testcase} {numbers[0]}")
