@@ -1,30 +1,46 @@
-T = int(input())
-for testcase in range(T):
-    N = int(input())
-    arr = [list(map(int, input().split())) for i in range(N)]
-    track = [[0]*N for _ in range(N)]
-    max_rec = 0
-    max_d1 = N-1
-    max_d2 = N-1
+T = int(input()) # 테스트 케이스의 개수 입력
 
+for testcase in range(T):
+    N = int(input()) # 격자 크기 N 입력 (N x N)
+    
+    # N x N 크기의 2차원 배열 입력 받기
+    arr = [list(map(int, input().split())) for i in range(N)]
+    
+    # 이미 확인(방문)한 위치를 기록하기 위한 N x N 방문 체크 배열 초기화
+    track = [[0] * N for _ in range(N)]
+    
+    max_rec = 0 # 탐색 중 발견한 최대 직사각형 넓이를 저장할 변수
+    max_d1 = N - 1 # 행(row)의 최대 인덱스 경계값
+    max_d2 = N - 1 # 열(col)의 최대 인덱스 경계값
+
+    # 격자 전체를 순회 (d1: 행 인덱스, d2: 열 인덱스)
     for d1 in range(N):
         for d2 in range(N):
-            if arr[d1][d2] == 1 and track[d1][d2] == 0: # 만약 1로 찍혀있고, 이전에 방문하지 않았다면
+            # 현재 위치가 1이고, 아직 이전 탐색에서 방문 처리되지 않은 시작점인 경우
+            if arr[d1][d2] == 1 and track[d1][d2] == 0:
+                
+                # 1. 오른쪽 방향(가로, 열)으로 연속된 1의 개수 탐색
                 d2_move_ava = 0
                 while (d2 + d2_move_ava) <= max_d2 and arr[d1][d2 + d2_move_ava] == 1:
                     d2_move_ava += 1
-                d2_move_ava -= 1
+                d2_move_ava -= 1 # While문 탈출 시 +1 넘쳐서 더해진 이동 거리를 보정
 
+                # 2. 아래쪽 방향(세로, 행)으로 연속된 1의 개수 탐색
                 d1_move_ava = 0
                 while (d1 + d1_move_ava) <= max_d1 and arr[d1 + d1_move_ava][d2] == 1:
                     d1_move_ava += 1
-                d1_move_ava -= 1
+                d1_move_ava -= 1 # While문 탈출 시 +1 넘쳐서 더해진 이동 거리를 보정
 
-                for track_d1 in range(d1_move_ava+1):
-                    for track_d2 in range(d2_move_ava+1):
+                # 3. 탐색된 가로/세로 영역 전체를 방문 처리(1로 표시)
+                # (주의: 내부가 모두 1인지 확인하는 로직이 아니라 탐색된 가로/세로 길이만큼 직사각형 범위 전체를 마킹함)
+                for track_d1 in range(d1_move_ava + 1):
+                    for track_d2 in range(d2_move_ava + 1):
                         track[d1 + track_d1][d2 + track_d2] = 1
 
-                if (d2_move_ava+1) * (d1_move_ava+1) >= max_rec:
-                    max_rec = (d2_move_ava+1) * (d1_move_ava+1)
+                # 4. 현재 구한 직사각형 넓이 계산 및 최대 넓이 갱신
+                current_area = (d2_move_ava + 1) * (d1_move_ava + 1)
+                if current_area >= max_rec:
+                    max_rec = current_area
 
+    # 테스트 케이스 결과 출력
     print(f"#{testcase+1} {max_rec}")
