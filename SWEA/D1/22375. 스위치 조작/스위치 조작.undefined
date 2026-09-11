@@ -1,0 +1,18 @@
+T = int(input())
+
+for tc in range(T):
+    N = int(input())
+    before = list(map(int, input().split())) # 이전
+    after = list(map(int,input().split())) # 이후
+    count = 0 # 개수를 세는 변수
+
+    for idx in range(N):
+        if before[idx] != after[idx]: # before와 after의 값이 다르다면,
+            count += 1
+            for i in range(idx, N): # idx 자리부터 N 자리까지
+                if before[i] == 1: # 1이었다면 0으로, 0이었다면 1로 변환
+                    before[i] = 0
+                else:
+                    before[i] = 1
+
+    print(f"#{tc+1} {count}")
