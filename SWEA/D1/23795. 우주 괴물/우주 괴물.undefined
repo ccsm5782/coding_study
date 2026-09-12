@@ -1,0 +1,34 @@
+T = int(input())
+
+for testcase in range(1, T+1):
+    N = int(input())
+    arr = [list(map(int, input().split())) for _ in range(N)]
+
+    monster_row = 0
+    monster_col = 0
+    # 괴물의 위치 찾기 (monster_row, monster_col)
+    for row in range(N):
+        for col in range(N):
+            if arr[row][col] == 2:
+                monster_row, monster_col = row, col
+
+    initial_monster_row = monster_row
+    initial_monster_col = monster_col
+
+    move = [[0,1], [1,0], [0,-1], [-1,0]]
+
+    # 4 방향 탐색
+    for move_row, move_col in move:
+        monster_row, monster_col = initial_monster_row, initial_monster_col
+        while (0 <= monster_row + move_row < N ) and (0 <= monster_col + move_col < N) and (arr[monster_row + move_row][monster_col + move_col] == 0):
+            monster_row = monster_row + move_row
+            monster_col = monster_col + move_col
+            arr[monster_row][monster_col] = 1
+
+    # 출력 : N * N 2차원 배열에서 0의 개수 측정
+    count = 0
+    for i in range(N):
+        for j in range(N):
+            if arr[i][j] == 0:
+                count += 1
+    print(f"#{testcase} {count}")
