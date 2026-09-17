@@ -1,0 +1,19 @@
+for i in range(1, 11):
+    testcase = int(input())
+    arr = list(map(int, input().split()))
+
+    while True:
+        for idx in range(1,6):
+            number = arr.pop(0) - idx
+            if number < 0:
+                number = 0
+            arr.append(number)
+
+            if arr[-1] == 0:
+                break
+
+        if arr[-1] == 0:
+            break
+
+    print(f"#{testcase}", end=' ')
+    print(*arr)
