@@ -1,0 +1,61 @@
+numdict = {
+    '0001101': 0,
+    '0011001': 1,
+    '0010011': 2,
+    '0111101': 3,
+    '0100011': 4,
+    '0110001': 5,
+    '0101111': 6,
+    '0111011': 7,
+    '0110111': 8,
+    '0001011': 9
+}
+
+N = int(input())
+
+for testcase in range(1, N+1):
+    # 세로 N, 가로 M
+    N, M = map(int, input().split())
+    # 영상물 원본
+    arr = [list(input()) for i in range(N)]
+    # code의 오른쪽 끝 찾기
+    end_row, end_col = 0, 0
+    for row in range(N):
+        for col in range(M-1, -1, -1):
+            if int(arr[row][col]) == 1:
+                end_row = row
+                end_col = col
+                break
+        if end_row != 0 and end_col != 0:
+            break
+
+    # print(end_row, end_col)
+
+    # code 부분 추출하기
+    code = arr[end_row][end_col-55:end_col+1]
+    # print(code)
+    # print(len(code))
+
+    number = []
+    for i in range(8):
+        temp = ''.join(code[i*7: i*7+7])
+        number.append(numdict[temp])
+
+    # print(number)
+
+    sumnum = 0
+
+    for i in range(8):
+        # 홀수 자리
+        if i % 2 == 0:
+            sumnum += 3 * number[i]
+        else:
+            sumnum += number[i]
+        # print(sumnum)
+
+    answer = 0
+    # print(sumnum)
+    if sumnum % 10 == 0:
+        answer = sum(number)
+
+    print(f"#{testcase} {answer}")
