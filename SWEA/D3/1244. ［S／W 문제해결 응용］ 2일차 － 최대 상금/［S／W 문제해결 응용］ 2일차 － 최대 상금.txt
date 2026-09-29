@@ -1,0 +1,31 @@
+T = int(input())
+ 
+def dfs(cnt):
+    global result
+ 
+    if cnt == K:
+        result = max(result, int(''.join(arr)))
+        return
+ 
+    for i in range(N):
+        for j in range(i + 1, N):
+            arr[i], arr[j] = arr[j], arr[i]
+            state = (cnt + 1, ''.join(arr))
+            if state not in visited:
+                visited.add(state)
+                dfs(cnt + 1)
+ 
+            arr[i], arr[j] = arr[j], arr[i]
+ 
+for tc in range(1, T+1):
+    num, K = input().split()
+    K = int(K)
+    arr = list(num)
+    N = len(arr)
+ 
+    visited = set()
+    result = 0
+ 
+    dfs(0)
+ 
+    print(f'#{tc} {result}')
