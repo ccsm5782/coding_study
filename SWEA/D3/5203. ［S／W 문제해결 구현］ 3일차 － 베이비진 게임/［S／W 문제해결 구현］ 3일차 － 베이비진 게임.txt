@@ -1,0 +1,45 @@
+def runn(player):
+    for i in range(len(player)):
+        k = player[i]
+        # k가 가장 작은 경우
+        if k+1 in player and k+2 in player:
+            return True
+        # k가 중간인 경우
+        if k-1 in player and k+1 in player:
+            return True
+        # k가 가장 클 경우
+        if k-1 in player and k-2 in player:
+            return True
+
+def triplet(player):
+    for i in range(len(player)):
+        k = player[i]
+        cnt = 0
+        for j in range(len(player)):
+            if k == player[j]:
+                cnt += 1
+        if cnt == 3:
+            return True
+
+
+T = int(input())
+
+for tc in range(1, T+1):
+    arr = list(map(int, input().split()))
+    player1 = []
+    player2 = []
+    answer = 0
+    while arr:
+        a = arr.pop(0)
+        player1.append(a)
+        if runn(player1) or triplet(player1):
+            answer = 1
+            break
+        if arr:
+            b = arr.pop(0)
+            player2.append(b)
+            if runn(player2) or triplet(player2):
+                answer = 2
+                break
+
+    print(f"#{tc} {answer}")
