@@ -1,0 +1,26 @@
+T = int(input())
+
+def dfs(now, rest, cnt):
+    global result
+    # 가지치기
+    if cnt >= result:
+        return
+    # 정류장 기준 (정류장의 개수가 N 이므로, N-1 위치에 도착했다면)
+    if now == N-1:
+        result = min(cnt, result)
+        return
+    # 남은 배터리 수만큼 움직인다
+    for i in range(1, rest + 1):
+        if now + i < N - 1:
+            dfs(now + i, battery[now + i], cnt + 1)
+        if now + i == N - 1:
+            dfs(now + i, 0, cnt)
+            break
+
+for tc in range(1, T+1):
+    arr = list(map(int, input().split()))
+    N = arr[0] # 전체 정류장의 수
+    battery = arr[1:]
+    result = 100
+    dfs(0, arr[1], 0)
+    print(f"#{tc} {result}")
